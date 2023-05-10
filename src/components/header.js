@@ -1,11 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import HeaderFont from './HeaderFont';
 
 const Container = styled.div`
     background-color: #D9D9D9;
     width: 100%;
     height: 40px;
+`;
+
+const TextBox = styled.div`
+    margin: 0px 20px;
 `;
 
 const SubContainer = styled.div`
@@ -28,18 +31,25 @@ const RightContent = styled.div`
 
 `;
 
-const Header = () => {
+const A = styled.a`
+    text-decoration: none;
+    color: #000;
+    cursor: pointer;
+`;
+
+const Header = ({ setLoginModal }) => {
+    
     return (
         <Container>
             <SubContainer>
                 <LeftContent>
-                    <HeaderFont text="로고" />
-                    <HeaderFont text="Home" />
-                    <HeaderFont text="로그인" />
-                    <HeaderFont text="도움말" />
+                    <TextBox>로고</TextBox>
+                    <TextBox>홈</TextBox>
+                    <TextBox><A onClick={() => setLoginModal(true)}>로그인</A></TextBox>
+                    <TextBox>도움말</TextBox>
                 </LeftContent>
                 <RightContent>
-                    <HeaderFont text="날짜" />
+                    <TextBox>날짜</TextBox>
                 </RightContent>
             </SubContainer>
         </Container>
