@@ -1,11 +1,13 @@
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import Main from './pages/main/Main';
 
 
 function App() {
   return (
-    <div>
-      first commit
-    </div>
+    <Routes>
+      <Route path="/" element={<Main />} />
+    </Routes>
   );
 }
 

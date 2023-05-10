@@ -1,4 +1,18 @@
+@font-face {
+	font-family: "AppleSDGothicR";
+	src: url(./assets/fonts/AppleSDGothicNeo/AppleSDGothicNeoR.ttf);
+
+  font-family: "AppleSDGothicM";
+  src:url(./assets/fonts/AppleSDGothicNeo/AppleSDGothicNeoM.ttf)
+}
+
+:root {
+	--font-AppleSDGothicNeoR: "AppleSDGothicR";
+  --font-AppleSDGothicNeoM: "AppleSDGothicM";
+}
+
 html, body {
+  font-family: var(--font-AppleSDGothicNeoM);
   margin: 0;
   padding: 0;
 }
