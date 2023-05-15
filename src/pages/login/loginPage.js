@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import styled, { keyframes } from "styled-components";
 import { loginModalFalse } from "../../redux/slices/loginModalSlice";
 
+
 const fadeIn = keyframes`
     0% {
         opacity: 0;
@@ -148,8 +149,8 @@ const Login = () => {
       <ChatContainer>
         <LoginButtonChat>
           <LoginButton>
-            <button>로그인</button> <br/>
-            <button>소셜 로그인</button> <br/>
+            <button>로그인</button> <br />
+            <button>소셜 로그인</button> <br />
             <button>회원가입</button>
           </LoginButton>
         </LoginButtonChat>
