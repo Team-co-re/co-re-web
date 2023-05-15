@@ -47,7 +47,7 @@ const Header = () => {
     );
 
     const nowDate = () => {
-        const d = new Date();        
+        const d = new Date();
         const month = d.getMonth();
         const date = d.getDate();
         const day = arrDayStr[d.getDay()];

@@ -18,3 +18,5 @@ root.render(
 // npm i --save-dev redux-devtools-extension
 // npm install styled-components
 // npm install axios
+// npm install @reduxjs/toolkit react-redux <- 리덕스는 위에 생성했음
+// npm install redux-logger
