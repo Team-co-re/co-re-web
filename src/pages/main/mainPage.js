@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Header from '../../components/header';
 import Login from '../login/loginPage';
 import Menu from '../../components/dock';
+import { useDispatch, useSelector } from 'react-redux';
 
 const MainContainer = styled.div`
     width: 100vw;
@@ -10,14 +11,14 @@ const MainContainer = styled.div`
 `;
 
 const Main = () => {
-    const [loginModal, setLoginModal] = useState(false);
+    const loginModal = useSelector((state) => state.loginModal.loginModalState);
 
     return (
         <MainContainer>
-            <Header setLoginModal={setLoginModal} />
+            <Header />
             <Menu />
             {loginModal ?
-                <Login setLoginModal={setLoginModal} />
+                <Login />
                 : null}
         </MainContainer>
     );

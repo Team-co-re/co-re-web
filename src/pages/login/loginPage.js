@@ -1,5 +1,7 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import styled, { keyframes } from 'styled-components';
+import { loginModalFalse } from '../../redux/slices/loginModalSlice';
 
 const fadeIn = keyframes`
     0% {
@@ -38,14 +40,12 @@ const CloseBtn = styled.button`
 
 `;
 
-const Login = ({ setLoginModal }) => {
-    const closeModal = () => {
-        setLoginModal(false);
-    };
+const Login = () => {
+    const dispatch = useDispatch();
 
     return (
         <LoginContainer>
-            <CloseBtn onClick={closeModal}>X</CloseBtn>
+            <CloseBtn onClick={() => dispatch(loginModalFalse()) }>X</CloseBtn>
             <p>로그인 창</p>
         </LoginContainer>
     );

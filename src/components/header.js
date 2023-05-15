@@ -1,5 +1,7 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import { loginModalTrue } from '../redux/slices/loginModalSlice';
 
 const Container = styled.div`
     background-color: #D9D9D9;
@@ -37,15 +39,15 @@ const A = styled.a`
     cursor: pointer;
 `;
 
-const Header = ({ setLoginModal }) => {
-    
+const Header = () => {
+    const dispatch = useDispatch();
     return (
         <Container>
             <SubContainer>
                 <LeftContent>
                     <TextBox>로고</TextBox>
                     <TextBox>홈</TextBox>
-                    <TextBox><A onClick={() => setLoginModal(true)}>로그인</A></TextBox>
+                    <TextBox><A onClick={() => dispatch(loginModalTrue())}>로그인</A></TextBox>
                     <TextBox>도움말</TextBox>
                 </LeftContent>
                 <RightContent>
