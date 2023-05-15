@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Header from '../../components/header';
 import Login from '../login/loginPage';
 import Menu from '../../components/dock';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const MainContainer = styled.div`
     width: 100vw;
