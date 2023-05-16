@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
     loginModalState: false,
+    
 }
 
 export const loginModalSlice = createSlice({
