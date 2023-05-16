@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { loginModalTrue } from '../redux/slices/loginModalSlice';
+import { changeProcess } from '../redux/slices/headerProcessSlice';
 
 const Container = styled.div`
     background-color: #D9D9D9;
@@ -40,11 +41,18 @@ const A = styled.a`
 `;
 
 const Header = () => {
+    const process = useSelector((state) => state.process.processText);
+
     const arrDayStr = ['일','월','화','수','목','금','토'];
 
     const [date, setDate] = useState(
         `${new Date().getMonth()}월 ${new Date().getDate()}일 (${arrDayStr[new Date().getDay()]}) ${new Date().getHours()}:${new Date().getMinutes()}`
     );
+
+    const loginClickHandler = (e) => {
+        dispatch(loginModalTrue());
+        dispatch(changeProcess(e.target.innerText));
+    };
 
     const nowDate = () => {
         const d = new Date();
@@ -62,15 +70,14 @@ const Header = () => {
 
     startDate();
 
-
     const dispatch = useDispatch();
     return (
         <Container>
             <SubContainer>
                 <LeftContent>
                     <TextBox>로고</TextBox>
-                    <TextBox>홈</TextBox>
-                    <TextBox><A onClick={() => dispatch(loginModalTrue())}>로그인</A></TextBox>
+                    <TextBox>{process}</TextBox>
+                    <TextBox><A onClick={loginClickHandler}>로그인</A></TextBox>
                     <TextBox>도움말</TextBox>
                 </LeftContent>
                 <RightContent>

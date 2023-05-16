@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled, { keyframes } from "styled-components";
 import { loginModalFalse } from "../../redux/slices/loginModalSlice";
+import { returnBaseProcess } from "../../redux/slices/headerProcessSlice";
 
 
 const fadeIn = keyframes`
@@ -132,6 +133,11 @@ const Login = () => {
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState("");
 
+  const closeOnClickHandler = () => {
+    dispatch(loginModalFalse());
+    dispatch(returnBaseProcess());
+  }
+
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
   };
@@ -145,7 +151,7 @@ const Login = () => {
 
   return (
     <LoginContainer>
-      <CloseBtn onClick={() => dispatch(loginModalFalse())}>X</CloseBtn>
+      <CloseBtn onClick={closeOnClickHandler}>X</CloseBtn>
       <ChatContainer>
         <LoginButtonChat>
           <LoginButton>

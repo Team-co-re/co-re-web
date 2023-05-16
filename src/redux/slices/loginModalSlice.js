@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit"
 const initialState = {
     loginModalState: false,
     
-}
+};
 
 export const loginModalSlice = createSlice({
     name: 'loginModal',
@@ -21,7 +21,7 @@ export const loginModalSlice = createSlice({
             state.loginModalState = !state.loginModalState
         },
     },
-})
+});
 
 export const {loginModalTrue, loginModalFalse, loginModalStateChange} = loginModalSlice.actions;
 
