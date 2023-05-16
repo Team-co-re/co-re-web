@@ -128,6 +128,59 @@ const Button = styled.button`
   color: #000000;
 `;
 
+const LoginForm = styled.div`
+  position: absolute;
+  top: 160px;
+  left: 20px;
+  border-radius: 10px;
+  border: none;
+  padding: 8px;
+  background-color: #fff065;
+  color: #000000;
+`;
+
+const IdForm = styled.div`
+  background-color: rgba(255, 242, 172, 0.7);
+  width: 260px;
+  margin-bottom: 8px;
+  margin-left: 280px;
+  padding: 8px;
+  border-radius: 20px;
+  text-align: center;
+  position: absolute;
+  top: 200px;
+  input {
+    background-color: transparent;
+    border: none;
+  }
+`;
+const PasswordForm = styled.div`
+  position: absolute;
+  top: 250px;
+  left: 20px;
+  border-radius: 10px;
+  border: none;
+  padding: 8px;
+  background-color: #fff065;
+  color: #000000;
+`;
+const PassForm = styled.div`
+  background-color: rgba(255, 242, 172, 0.7);
+  width: 260px;
+  margin-bottom: 8px;
+  margin-left: 280px;
+  padding: 8px;
+  border-radius: 20px;
+  text-align: center;
+  position: absolute;
+  top: 290px;
+  input {
+    background-color: transparent;
+    border: none;
+  }
+`;
+
+
 const Login = () => {
   const dispatch = useDispatch();
   const [messages, setMessages] = useState([]);
@@ -160,6 +213,14 @@ const Login = () => {
             <button>회원가입</button>
           </LoginButton>
         </LoginButtonChat>
+        <LoginForm>아이디를 입력하세요</LoginForm>
+        <IdForm>
+          <input type="text" />
+        </IdForm>
+        <PasswordForm>비밀번호를 입력하세요</PasswordForm>
+        <PassForm>
+          <input type="password" />
+        </PassForm>
         <MessageContainer>
           {messages.map((message, index) => (
             <Message key={index}> {message} </Message>
