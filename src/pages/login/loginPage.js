@@ -37,6 +37,7 @@ const LoginContainer = styled.div`
     border: 1px solid black;
     border-radius: 8px;
     border: none;
+
 `;
 
 const CloseBtn = styled.button`
@@ -58,6 +59,7 @@ const LoginButtonChat = styled.div`
   padding: 8px;
   border-radius: 20px;
   text-align: center;
+
 `;
 
 const LoginButton = styled.div`
@@ -70,39 +72,29 @@ const LoginButton = styled.div`
 
 
 const ChatContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    height: 351.2px;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px;
+  display: flex;
+  flex-direction: column;
+  height: 351.2px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
 `;
 
 const MessageContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 600px;
-    overflow-y: scroll;
-    align-items: right;
-    overflow-y: auto;
-    &::-webkit-scrollbar {
-        width: 4px;
-    }
-    &::-webkit-scrollbar-thumb {
-        border-radius: 2px;
-        background: #ccc;
-    }
-`;
-
-const Message = styled.div`
-  background-color: rgba(255, 242, 172, 0.7);
-  width: 260px;
-  margin-bottom: 8px;
-  margin-left: 280px;
-  padding: 8px;
-  border-radius: 20px;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 600px;
+  overflow-y: scroll;
+  align-items: right;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background: #ccc;
+  }
 `;
 
 const InputContainer = styled.div`
@@ -117,14 +109,15 @@ const Input = styled.input`
   flex: 1;
   border-radius: 4px;
   border: none;
-  padding: 8px; 
+  padding: 8px;
+  outline: none;
 `;
 
 const Button = styled.button`
   border-radius: 1px;
   border: none;
   padding: 8px;
-  background-color: #FFF065;
+  background-color: #fff065;
   color: #000000;
 `;
 
@@ -152,6 +145,8 @@ const IdForm = styled.div`
   input {
     background-color: transparent;
     border: none;
+    outline: none;
+    text-align: center;
   }
 `;
 const PasswordForm = styled.div`
@@ -177,6 +172,8 @@ const PassForm = styled.div`
   input {
     background-color: transparent;
     border: none;
+    outline: none;
+    text-align: center;
   }
 `;
 
@@ -213,18 +210,21 @@ const Login = () => {
             <button>회원가입</button>
           </LoginButton>
         </LoginButtonChat>
-        <LoginForm>아이디를 입력하세요</LoginForm>
-        <IdForm>
-          <input type="text" />
-        </IdForm>
-        <PasswordForm>비밀번호를 입력하세요</PasswordForm>
-        <PassForm>
-          <input type="password" />
-        </PassForm>
         <MessageContainer>
-          {messages.map((message, index) => (
-            <Message key={index}> {message} </Message>
-          ))}
+          <LoginForm>아이디를 입력하세요</LoginForm>
+          <IdForm>
+            <input
+              type="text"
+              placeholder="아이디를 입력하세요"
+            />
+          </IdForm>
+          <PasswordForm>비밀번호를 입력하세요</PasswordForm>
+          <PassForm>
+            <input
+              type="password"
+              placeholder="비밀번호를 입력하세요"
+            />
+          </PassForm>
         </MessageContainer>
         <InputContainer>
           <Input value={inputValue} onChange={handleInputChange} />
