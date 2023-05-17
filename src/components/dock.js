@@ -12,10 +12,29 @@ const Container = styled.div`
     border-radius: 8px;
 `;
 
+const SubContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+`;
+
+const Icon = styled.div`
+    margin: 16px;
+    width: 64px;
+    height: 64px;
+    background-color: black;
+`;
+
 const Menu = () => {
     return (
         <Container>
-            
+            <SubContainer>
+                <Icon />
+                <Icon />
+                <Icon />
+                <Icon />
+            </SubContainer>
         </Container>
     );
 };
