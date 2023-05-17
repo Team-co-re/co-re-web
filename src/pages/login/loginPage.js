@@ -1,8 +1,11 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, {useState} from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled, { keyframes } from "styled-components";
 import { loginModalFalse } from "../../redux/slices/loginModalSlice";
 import { returnBaseProcess } from "../../redux/slices/headerProcessSlice";
+import { setMessages, setUsername, setPassword, setPasswordVisible, resetLogin } from '../../redux/slices/loginSlice';
+
+
 
 
 const fadeIn = keyframes`
@@ -102,7 +105,7 @@ const InputContainer = styled.div`
   display: flex;
   width: 600px;
   position: relative;
-  top: 2px;
+  top: 10px;
 `;
 
 const Input = styled.input`
@@ -177,25 +180,38 @@ const PassForm = styled.div`
   }
 `;
 
-
 const Login = () => {
   const dispatch = useDispatch();
-  const [messages, setMessages] = useState([]);
-  const [inputValue, setInputValue] = useState("");
-
+  const { messages, username, password, isPasswordVisible } = useSelector(
+    (state) => state.login
+  );
+  
+  const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);
+  
   const closeOnClickHandler = () => {
     dispatch(loginModalFalse());
     dispatch(returnBaseProcess());
-  }
+    dispatch(resetLogin());
+  };
 
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
+  const handleUsernameChange = (event) => {
+    dispatch(setUsername(event.target.value));  };
+
+  const handlePasswordChange = (event) => {
+    dispatch(setPassword(event.target.value));  };
+  
+  const handleLoginClick = () => {
+    setIsLoginFormVisible(true);
   };
 
   const handleButtonClick = () => {
-    if (inputValue) {
-      setMessages([...messages, inputValue]);
-      setInputValue("");
+    if (username && !isPasswordVisible) {
+      dispatch(setPasswordVisible(true));
+    } else if (password) {
+      dispatch(setMessages(`Username: ${username}, Password: ${password}`));
+      dispatch(setUsername(''));
+      dispatch(setPassword(''));
+      dispatch(setPasswordVisible(false));
     }
   };
 
@@ -205,29 +221,46 @@ const Login = () => {
       <ChatContainer>
         <LoginButtonChat>
           <LoginButton>
-            <button>로그인</button> <br />
+            <button onClick={handleLoginClick}>로그인</button> <br />
             <button>소셜 로그인</button> <br />
             <button>회원가입</button>
           </LoginButton>
         </LoginButtonChat>
-        <MessageContainer>
-          <LoginForm>아이디를 입력하세요</LoginForm>
-          <IdForm>
-            <input
-              type="text"
-              placeholder="아이디를 입력하세요"
-            />
-          </IdForm>
-          <PasswordForm>비밀번호를 입력하세요</PasswordForm>
-          <PassForm>
-            <input
-              type="password"
-              placeholder="비밀번호를 입력하세요"
-            />
-          </PassForm>
-        </MessageContainer>
+        <div style={{ flex: 1 }}>
+          {isLoginFormVisible && (
+            <MessageContainer>
+              <LoginForm>아이디를 입력하세요</LoginForm>
+              <IdForm>
+                <input
+                  type="text"
+                  placeholder="아이디를 입력하세요"
+                  value={username}
+                  onChange={handleUsernameChange}
+                />
+              </IdForm>
+              {isPasswordVisible && (
+                <>
+                  <PasswordForm>비밀번호를 입력하세요</PasswordForm>
+                  <PassForm>
+                    <input
+                      type="password"
+                      placeholder="비밀번호를 입력하세요"
+                      value={password}
+                      onChange={handlePasswordChange}
+                    />
+                  </PassForm>
+                </>
+              )}
+            </MessageContainer>
+          )}
+        </div>
         <InputContainer>
-          <Input value={inputValue} onChange={handleInputChange} />
+          <Input
+            value={isPasswordVisible ? password : username}
+            onChange={
+              isPasswordVisible ? handlePasswordChange : handleUsernameChange
+            }
+          />
           <Button onClick={handleButtonClick}> 전송 </Button>
         </InputContainer>
       </ChatContainer>
