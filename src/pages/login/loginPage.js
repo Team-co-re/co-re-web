@@ -4,6 +4,7 @@ import styled, { keyframes } from "styled-components";
 import { loginModalFalse } from "../../redux/slices/loginModalSlice";
 import { returnBaseProcess } from "../../redux/slices/headerProcessSlice";
 import { setMessages, setUsername, setPassword, setPasswordVisible, resetLogin } from '../../redux/slices/loginSlice';
+import Sign from "./Sign"
 
 
 
@@ -187,6 +188,7 @@ const Login = () => {
   );
   
   const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);
+  const [isSignupFormVisible, setIsSignupFormVisible] = useState(false);
   
   const closeOnClickHandler = () => {
     dispatch(loginModalFalse());
@@ -204,6 +206,10 @@ const Login = () => {
     setIsLoginFormVisible(true);
   };
 
+  const handleSignupClick = () => {
+    setIsSignupFormVisible(true); 
+  };
+
   const handleButtonClick = () => {
     if (username && !isPasswordVisible) {
       dispatch(setPasswordVisible(true));
@@ -215,6 +221,7 @@ const Login = () => {
     }
   };
 
+  
   return (
     <LoginContainer>
       <CloseBtn onClick={closeOnClickHandler}>X</CloseBtn>
@@ -223,11 +230,11 @@ const Login = () => {
           <LoginButton>
             <button onClick={handleLoginClick}>로그인</button> <br />
             <button>소셜 로그인</button> <br />
-            <button>회원가입</button>
+            <button onClick={handleSignupClick}>회원가입</button> {/* 수정된 부분 */}
           </LoginButton>
         </LoginButtonChat>
         <div style={{ flex: 1 }}>
-          {isLoginFormVisible && (
+          {isLoginFormVisible && !isSignupFormVisible && ( // 수정된 부분
             <MessageContainer>
               <LoginForm>아이디를 입력하세요</LoginForm>
               <IdForm>
@@ -252,6 +259,9 @@ const Login = () => {
                 </>
               )}
             </MessageContainer>
+          )}
+          {isSignupFormVisible && ( // 추가된 부분
+            <Sign />
           )}
         </div>
         <InputContainer>
