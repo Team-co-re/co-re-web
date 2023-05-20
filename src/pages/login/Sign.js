@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState,useEffect, useRef} from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from "react-redux";
 import { setUsername, setPassword, setConfirmPassword, setSkillLevel, setJobRole, setNickname} from '../../redux/slices/signSlice';
@@ -106,76 +106,118 @@ const PassForm2 = styled.div`
 `;
 
 
+
 const Sign = () => {
-    const dispatch = useDispatch();
-    const { messages, username, password, confirmPassword, isPasswordVisible, skillLevel, jobRole, nickname } = useSelector((state) => state.login);
-    const messageContainerRef = useRef(null);
+  const dispatch = useDispatch();
+  const {
+    messages,
+    username,
+    password,
+    confirmPassword,
+    isPasswordVisible,
+    skillLevel,
+    jobRole,
+    nickname,
+  } = useSelector((state) => state.login);
+  const messageContainerRef = useRef(null);
+  const [isIdFormSubmitted, setIsIdFormSubmitted] = useState(false);
+  const [isPasswordFormSubmitted, setIsPasswordFormSubmitted] = useState(false);
 
-    useEffect(() => {
-        if (messageContainerRef.current) {
-          messageContainerRef.current.scrollTop = messageContainerRef.current.scrollHeight;
-        }
-      }, [messages]);
+  useEffect(() => {
+    if (messageContainerRef.current) {
+      messageContainerRef.current.scrollTop = messageContainerRef.current.scrollHeight;
+    }
+  }, [messages]);
 
-    const handleUsernameChange = (event) => {
-        dispatch(setUsername(event.target.value));
-      };
-    
-      const handlePasswordChange = (event) => {
-        dispatch(setPassword(event.target.value));
-      };
-    
-      const handleConfirmPasswordChange = (event) => {
-        dispatch(setConfirmPassword(event.target.value));
-      };
-    
-      const handleSkillLevelChange = (event) => {
-        dispatch(setSkillLevel(event.target.value));
-      };
-    
-      const handleJobRoleChange = (event) => {
-        dispatch(setJobRole(event.target.value));
-      };
-    
-      const handleNicknameChange = (event) => {
-        dispatch(setNickname(event.target.value));
-      };
+  const handleUsernameChange = (event) => {
+    dispatch(setUsername(event.target.value));
+  };
 
-      const handleSubmit = () => {
+  const handlePasswordChange = (event) => {
+    dispatch(setPassword(event.target.value));
+  };
 
-      };
+  const handleConfirmPasswordChange = (event) => {
+    dispatch(setConfirmPassword(event.target.value));
+  };
 
-    return (
-        <MessageContainer>
-            <SignIdForm> 사용할 아이디를 입력하세요. </SignIdForm>
-            <IdForm>
-                <input
-                  type="text"
-                  placeholder="아이디를 입력하세요"
-                  value={username}
-                  onChange={handleUsernameChange}
-                />
-              </IdForm>
-              <SignPasswordForm>사용할 비밀번호를 입력하세요.</SignPasswordForm>
-                  <PassForm>
-                  <input
-                    type={isPasswordVisible ? 'text' : 'password'}
-                    placeholder="비밀번호를 입력하세요"
-                    value={password}
-                    onChange={handlePasswordChange}
-                    />
-                  </PassForm>
-                  <ConfirmPassForm>비밀번호를 재확인하세요.</ConfirmPassForm>
-                    <PassForm2>
-                        <input
-                        type={isPasswordVisible ? 'text' : 'password'}
-                        placeholder="비밀번호를 재확인하세요"
-                        value={confirmPassword}
-                        onChange={handleConfirmPasswordChange}
-                        />
-                    </PassForm2>
-        </MessageContainer>
-    );
+  const handleSkillLevelChange = (event) => {
+    dispatch(setSkillLevel(event.target.value));
+  };
+
+  const handleJobRoleChange = (event) => {
+    dispatch(setJobRole(event.target.value));
+  };
+
+  const handleNicknameChange = (event) => {
+    dispatch(setNickname(event.target.value));
+  };
+
+  const handleIdFormSubmit = () => {
+    setIsIdFormSubmitted(true);
+  };
+
+  const handlePasswordFormSubmit = () => {
+    setIsPasswordFormSubmitted(true);
+  };
+
+  const handleSubmit = () => {
+    // Handle the overall form submission here
+  };
+
+  return (
+    <MessageContainer ref={messageContainerRef}>
+      {!isIdFormSubmitted && (
+        <>
+          <SignIdForm>사용할 아이디를 입력하세요.</SignIdForm>
+          <IdForm>
+            <input
+              type="text"
+              placeholder="아이디를 입력하세요"
+              value={username}
+              onChange={handleUsernameChange}
+            />
+          </IdForm>
+        </>
+      )}
+
+      {isIdFormSubmitted && !isPasswordFormSubmitted && (
+        <>
+          <SignPasswordForm>사용할 비밀번호를 입력하세요.</SignPasswordForm>
+          <PassForm>
+            <input
+              type={isPasswordVisible ? 'text' : 'password'}
+              placeholder="비밀번호를 입력하세요"
+              value={password}
+              onChange={handlePasswordChange}
+            />
+          </PassForm>
+        </>
+      )}
+
+      {isPasswordFormSubmitted && (
+        <>
+          <ConfirmPassForm>비밀번호를 재확인하세요.</ConfirmPassForm>
+          <PassForm2>
+            <input
+              type={isPasswordVisible ? 'text' : 'password'}
+              placeholder="비밀번호를 재확인하세요"
+              value={confirmPassword}
+              onChange={handleConfirmPasswordChange}
+              />
+              </PassForm2>
+              </>
+      )}
+       {isPasswordFormSubmitted && (
+    <>
+      {/* 추가적인 입력 폼들을 여기에 추가하세요 */}
+    </>
+  )}
+
+  
+</MessageContainer>
+
+);
 };
 
 export default Sign;
