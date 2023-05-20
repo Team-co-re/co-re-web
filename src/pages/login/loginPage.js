@@ -63,8 +63,7 @@ const LoginButtonChat = styled.div`
   padding: 8px;
   border-radius: 20px;
   text-align: center;
-
-`;
+`;  
 
 const LoginButton = styled.div`
   button {
@@ -91,13 +90,15 @@ const MessageContainer = styled.div`
   width: 600px;
   overflow-y: scroll;
   align-items: right;
-  overflow-y: auto;
-  &::-webkit-scrollbar {
-    width: 4px;
+  overflow: auto;
+  ::-webkit-scrollbar {
+    width: 8px;
   }
-  &::-webkit-scrollbar-thumb {
-    border-radius: 2px;
-    background: #ccc;
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.4);
   }
 `;
 
@@ -226,6 +227,7 @@ const Login = () => {
     <LoginContainer>
       <CloseBtn onClick={closeOnClickHandler}>X</CloseBtn>
       <ChatContainer>
+      {!isSignupFormVisible && (
         <LoginButtonChat>
           <LoginButton>
             <button onClick={handleLoginClick}>로그인</button> <br />
@@ -233,6 +235,7 @@ const Login = () => {
             <button onClick={handleSignupClick}>회원가입</button> 
           </LoginButton>
         </LoginButtonChat>
+      )}
         <div style={{ flex: 1 }}>
           {isLoginFormVisible && !isSignupFormVisible && ( 
             <MessageContainer>
@@ -260,9 +263,9 @@ const Login = () => {
               )}
             </MessageContainer>
           )}
-          {isSignupFormVisible && (
-            <Sign />
-          )}
+        {isSignupFormVisible && (
+          <Sign />
+        )}
         </div>
         <InputContainer>
           <Input

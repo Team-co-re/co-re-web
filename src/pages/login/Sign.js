@@ -25,12 +25,33 @@ const ScrollableContent = styled.div`
   padding: 10px;
 `;
 
+const LoginButtonChat = styled.div`
+  background-color: #f3e77f;
+  position: relative;
+  top: -10px;
+  left: -6px;
+  width: 260px;
+  justify-content: left;
+  margin-bottom: 4px;
+  padding: 8px;
+  border-radius: 20px;
+  text-align: center;
+`;  
+
+const LoginButton = styled.div`
+  button {
+    margin-top: 3px;
+    margin-bottom: 3px;
+    cursor: pointer;
+  }
+`;
+
 const FormId = styled.div`
   Label{
     position: relative;
-    top: 160px;
-    left: 20px;
-    border-radius: 10px;
+    top: 12px;
+    left: -6px;
+    border-radius: 15px;
     border: none;
     padding: 8px;
     background-color: #fff065;
@@ -39,13 +60,14 @@ const FormId = styled.div`
   input{
     background-color: rgba(255, 242, 172, 0.7);
     width: 260px;
+    height: 20px;
     position: relative;
-    top: 200px;
-    right: 20px;
+    top: 28px;
+    right: -70px;
     margin-bottom: 8px;
     margin-left: 200px;
     padding: 8px;
-    border-radius: 10px;
+    border-radius: 20px;
     text-align: center;
     border: none;
     outline: none;
@@ -55,9 +77,9 @@ const FormId = styled.div`
 const FormPwd = styled.div`
   Label{
     position: relative;
-    top: 260px;
-    left: 20px;
-    border-radius: 10px;
+    top: 40px;
+    left: -6px;
+    border-radius: 15px;
     border: none;
     padding: 8px;
     background-color: #fff065;
@@ -67,12 +89,12 @@ const FormPwd = styled.div`
     background-color: rgba(255, 242, 172, 0.7);
     width: 260px;
     position: relative;
-    top: 300px;
-    right: 20px;
+    top: 75px;
+    right: -70px;
     margin-bottom: 8px;
     margin-left: 200px;
     padding: 8px;
-    border-radius: 10px;
+    border-radius: 20px;
     text-align: center;
     border: none;
     outline: none;
@@ -82,9 +104,9 @@ const FormPwd = styled.div`
 const FormPwd2 = styled.div`
   Label{
     position: relative;
-    top: 360px;
-    left: 20px;
-    border-radius: 10px;
+    top: 80px;
+    left: -6px;
+    border-radius: 15px;
     border: none;
     padding: 8px;
     background-color: #fff065;
@@ -94,12 +116,12 @@ const FormPwd2 = styled.div`
     background-color: rgba(255, 242, 172, 0.7);
     width: 260px;
     position: relative;
-    top: 400px;
-    right: 20px;
+    top: 115px;
+    right: -70px;
     margin-bottom: 8px;
     margin-left: 200px;
     padding: 8px;
-    border-radius: 10px;
+    border-radius: 20px;
     text-align: center;
     border: none;
     outline: none;
@@ -109,9 +131,9 @@ const FormPwd2 = styled.div`
 const FormSkill = styled.div`
   Label{
     position: relative;
-    top: 460px;
-    left: 20px;
-    border-radius: 10px;
+    top: 130px;
+    left: -6px;
+    border-radius: 15px;
     border: none;
     padding: 8px;
     background-color: #fff065;
@@ -121,12 +143,12 @@ const FormSkill = styled.div`
     background-color: rgba(255, 242, 172, 0.7);
     width: 260px;
     position: relative;
-    top: 500px;
-    right: 20px;
+    top: 150px;
+    right: -70px;
     margin-bottom: 8px;
     margin-left: 200px;
     padding: 8px;
-    border-radius: 10px;
+    border-radius: 20px;
     text-align: center;
     border: none;
     outline: none;
@@ -136,9 +158,9 @@ const FormSkill = styled.div`
 const FormJob = styled.div`
   Label{
     position: relative;
-    top: 560px;
-    left: 20px;
-    border-radius: 10px;
+    top: 180px;
+    left: -6px;
+    border-radius: 15px;
     border: none;
     padding: 8px;
     background-color: #fff065;
@@ -148,12 +170,12 @@ const FormJob = styled.div`
     background-color: rgba(255, 242, 172, 0.7);
     width: 260px;
     position: relative;
-    top: 600px;
-    right: 20px;
+    top: 200px;
+    right: -70px;
     margin-bottom: 8px;
     margin-left: 200px;
     padding: 8px;
-    border-radius: 10px;
+    border-radius: 20px;
     text-align: center;
     border: none;
     outline: none;
@@ -163,9 +185,9 @@ const FormJob = styled.div`
 const FormNickname = styled.div`
   Label{
     position: relative;
-    top: 660px;
-    left: 20px;
-    border-radius: 10px;
+    top: 230px;
+    left: -6px;
+    border-radius: 15px;
     border: none;
     padding: 8px;
     background-color: #fff065;
@@ -175,12 +197,12 @@ const FormNickname = styled.div`
     background-color: rgba(255, 242, 172, 0.7);
     width: 260px;
     position: relative;
-    top: 700px;
-    right: 20px;
+    top: 260px;
+    right: -70px;
     margin-bottom: 8px;
     margin-left: 200px;
     padding: 8px;
-    border-radius: 10px;
+    border-radius: 20px;
     text-align: center;
     border: none;
     outline: none;
@@ -209,6 +231,8 @@ const Sign = () => {
     nickname,
   } = useSelector((state) => state.login);
 
+  const [isSignupFormVisible] = useState(false);
+
   const handleUsernameChange = (e) => {
     dispatch(setUsername(e.target.value));
   };
@@ -233,9 +257,25 @@ const Sign = () => {
     dispatch(setNickname(e.target.value));
   };
 
+  const handleLoginClick = () => {
+    
+  };
+
+  const handleSignupClick = () => {
+  };
+
   return (
     <FormContainer>
       <ScrollableContent>
+      {!isSignupFormVisible && (
+        <LoginButtonChat>
+          <LoginButton>
+            <button onClick={handleLoginClick}>로그인</button> <br />
+            <button>소셜 로그인</button> <br />
+            <button onClick={handleSignupClick}>회원가입</button> 
+          </LoginButton>
+        </LoginButtonChat>
+      )}
       <FormId>
         <Label>사용할 아이디를 입력하세요.</Label>
         <Input type="text" value={username} onChange={handleUsernameChange} placeholder='아이디를 입력하세요' />
