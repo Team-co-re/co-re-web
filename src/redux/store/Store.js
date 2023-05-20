@@ -3,12 +3,14 @@ import logger from "redux-logger";
 import loginReducer from '../slices/loginModalSlice';
 import headerProcessReducer from '../slices/headerProcessSlice';
 import loginReducers from "../slices/loginSlice";
+import signReducer from "../slices/signSlice"
 
 export const store = configureStore({
   reducer: {
     loginModal: loginReducer,
     process: headerProcessReducer,
     login: loginReducers,
+    sign: signReducer,
   },
 
   middleware: getDefaultMiddleware().concat(logger),
