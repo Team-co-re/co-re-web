@@ -198,17 +198,19 @@ const Login = () => {
   };
 
   const handleUsernameChange = (event) => {
-    dispatch(setUsername(event.target.value));  };
+    dispatch(setUsername(event.target.value));
+  };
 
   const handlePasswordChange = (event) => {
-    dispatch(setPassword(event.target.value));  };
+    dispatch(setPassword(event.target.value));
+  };
   
   const handleLoginClick = () => {
     setIsLoginFormVisible(true);
   };
 
   const handleSignupClick = () => {
-    setIsSignupFormVisible(true); 
+    setIsSignupFormVisible(true);
   };
 
   const handleButtonClick = () => {
@@ -222,20 +224,19 @@ const Login = () => {
     }
   };
 
-  
   return (
     <LoginContainer>
       <CloseBtn onClick={closeOnClickHandler}>X</CloseBtn>
       <ChatContainer>
-      {!isSignupFormVisible && (
-        <LoginButtonChat>
-          <LoginButton>
-            <button onClick={handleLoginClick}>로그인</button> <br />
-            <button>소셜 로그인</button> <br />
-            <button onClick={handleSignupClick}>회원가입</button> 
-          </LoginButton>
-        </LoginButtonChat>
-      )}
+        {!isSignupFormVisible && (
+          <LoginButtonChat>
+            <LoginButton>
+              <button onClick={handleLoginClick}>로그인</button> <br />
+              <button>소셜 로그인</button> <br />
+              <button onClick={handleSignupClick}>회원가입</button> 
+            </LoginButton>
+          </LoginButtonChat>
+        )}
         <div style={{ flex: 1 }}>
           {isLoginFormVisible && !isSignupFormVisible && ( 
             <MessageContainer>
@@ -263,9 +264,20 @@ const Login = () => {
               )}
             </MessageContainer>
           )}
-        {isSignupFormVisible && (
-          <Sign />
-        )}
+          {isLoginFormVisible && !isSignupFormVisible && (
+            // 비밀번호 폼을 보여주는 코드
+            <div>
+              <PasswordForm>비밀번호를 입력하세요</PasswordForm>
+              <PassForm>
+                <input
+                  type="password"
+                  placeholder="비밀번호를 입력하세요"
+                  value={password}
+                  onChange={handlePasswordChange}
+                />
+              </PassForm>
+            </div>
+          )}
         </div>
         <InputContainer>
           <Input
