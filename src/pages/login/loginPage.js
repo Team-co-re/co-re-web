@@ -207,10 +207,12 @@ const Login = () => {
   
   const handleLoginClick = () => {
     setIsLoginFormVisible(true);
+    setIsSignupFormVisible(false);
   };
 
   const handleSignupClick = () => {
     setIsSignupFormVisible(true);
+    setIsLoginFormVisible(false);
   };
 
   const handleButtonClick = () => {
@@ -278,6 +280,9 @@ const Login = () => {
               </PassForm>
             </div>
           )}
+       {isSignupFormVisible && (
+          <Sign />
+        )}
         </div>
         <InputContainer>
           <Input
