@@ -1,10 +1,12 @@
-import React,{useState,useEffect, useRef} from 'react';
+import React,{useState} from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from "react-redux";
+import { signup } from '../../redux/slices/signSlice';
 import { setUsername, setPassword, setConfirmPassword, setSkillLevel, setJobRole, setNickname} from '../../redux/slices/signSlice';
 
 const FormContainer = styled.div`
   height: 300px;
+  margin-left: 17px ;
   overflow: auto;
   ::-webkit-scrollbar {
     width: 8px;
@@ -23,7 +25,7 @@ const FormContainer = styled.div`
 
 const ScrollableContent = styled.div`
   padding: 10px;
-`;
+  `;
 
 const LoginButtonChat = styled.div`
   background-color: #f3e77f;
@@ -208,11 +210,33 @@ const FormNickname = styled.div`
     outline: none;
   }
 `;
+const InputContainer = styled.div`
+  background-color: white;
+  display: flex;
+  width: 600px;
+  position: relative;
+  top: 19px;
+`;
+
+const Input = styled.input`
+  flex: 1;
+  border-radius: 4px;
+  border: none;
+  padding: 8px;
+  outline: none;
+`;
+
+const Button = styled.button`
+  border-radius: 1px;
+  border: none;
+  padding: 8px;
+  background-color: #fff065;
+  color: #000000;
+`;
 
 const Label = styled.label`
 `;
-const Input = styled.input`
-`;
+
 const Select = styled.select`
 `;
 const Option = styled.option`
@@ -229,7 +253,8 @@ const Sign = () => {
     skillLevel,
     jobRole,
     nickname,
-  } = useSelector((state) => state.login);
+  } = useSelector((state) => state);
+  
 
   const [isSignupFormVisible] = useState(false);
 
@@ -257,6 +282,8 @@ const Sign = () => {
     dispatch(setNickname(e.target.value));
   };
 
+  
+
   const handleLoginClick = () => {
     
   };
@@ -264,7 +291,31 @@ const Sign = () => {
   const handleSignupClick = () => {
   };
 
+  const handleButtonClick = async () => {
+    if (password !== confirmPassword) {
+      console.log("비번다시쳐라")
+      alert('비밀번호를 다시 확인하세요.');
+      return;
+    }
+    const formData = {
+      username,
+      password,
+      skillLevel,
+      jobRole,
+      nickname,
+    };
+    try {
+      await dispatch(signup(formData));
+      console.log('회원 가입이 성공적으로 완료되었습니다.');
+      alert('회원 가입이 성공적으로 완료되었습니다.')
+    } catch (error) {
+      console.log('회원 가입 중 오류가 발생했습니다.', error);
+    }
+  };
+      
+
   return (
+    <>
     <FormContainer>
       <ScrollableContent>
       {!isSignupFormVisible && (
@@ -315,7 +366,13 @@ const Sign = () => {
       </FormNickname>
       </ScrollableContent>
     </FormContainer>
+        <InputContainer>
+          <Input  placeholder='위 내용을 전부 작성 후 전송을 눌러주세요.'/>
+          <Button onClick={handleButtonClick}> 전송 </Button>
+        </InputContainer>
+  </>
   );
 };
+
 
 export default Sign;

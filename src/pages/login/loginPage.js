@@ -190,6 +190,7 @@ const Login = () => {
   
   const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);
   const [isSignupFormVisible, setIsSignupFormVisible] = useState(false);
+  const [isInputVisible, setIsInputVisible] = useState(true);
   
   const closeOnClickHandler = () => {
     dispatch(loginModalFalse());
@@ -213,6 +214,7 @@ const Login = () => {
   const handleSignupClick = () => {
     setIsSignupFormVisible(true);
     setIsLoginFormVisible(false);
+    setIsInputVisible(false);
   };
 
   const handleButtonClick = () => {
@@ -267,7 +269,6 @@ const Login = () => {
             </MessageContainer>
           )}
           {isLoginFormVisible && !isSignupFormVisible && (
-            // 비밀번호 폼을 보여주는 코드
             <div>
               <PasswordForm>비밀번호를 입력하세요</PasswordForm>
               <PassForm>
@@ -284,15 +285,12 @@ const Login = () => {
           <Sign />
         )}
         </div>
+        {isInputVisible && (
         <InputContainer>
-          <Input
-            value={isPasswordVisible ? password : username}
-            onChange={
-              isPasswordVisible ? handlePasswordChange : handleUsernameChange
-            }
-          />
+          <Input placeholder='위 내용을 전부 작성 후 전송을 눌러주세요.'/>
           <Button onClick={handleButtonClick}> 전송 </Button>
         </InputContainer>
+        )}
       </ChatContainer>
     </LoginContainer>
   );

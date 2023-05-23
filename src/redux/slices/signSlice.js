@@ -1,6 +1,20 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 
-const signSlice = createSlice({
+// 회원 가입 요청을 보내는 비동기 액션 생성자임
+export const signup = createAsyncThunk('sign/signup', async (formData) => {
+  try {
+    // 서버에 폼 데이터 전송하기
+    const response = await axios.post('/api/signup', formData);
+    // 서버 응답 처리하기
+    return response.data;
+  } catch (error) {
+    // 오류 처리하기
+    throw error.response.data;
+  }
+});
+
+const sign = createSlice({
   name: 'sign',
   initialState: {
     username: '',
@@ -9,6 +23,8 @@ const signSlice = createSlice({
     skillLevel: '',
     jobRole: '',
     nickname: '',
+    loading: false,
+    error: null,
   },
   reducers: {
     setUsername: (state, action) => {
@@ -30,6 +46,27 @@ const signSlice = createSlice({
       state.nickname = action.payload;
     },
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(signup.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(signup.fulfilled, (state) => {
+        state.loading = false;
+        // 성공적으로 회원 가입이 완료된 경우 초기화 또는 리다이렉트 등의 동작 수행해줌
+        state.username = '';
+        state.password = '';
+        state.confirmPassword = '';
+        state.skillLevel = '';
+        state.jobRole = '';
+        state.nickname = '';
+      })
+      .addCase(signup.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      });
+  },
 });
 
 export const {
@@ -39,6 +76,6 @@ export const {
   setSkillLevel,
   setJobRole,
   setNickname,
-} = signSlice.actions;
+} = sign.actions;
 
-export default signSlice.reducer;
+export default sign.reducer;
