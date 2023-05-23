@@ -1,11 +1,14 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-// 회원 가입 요청을 보내는 비동기 액션 생성자임
 export const signup = createAsyncThunk('sign/signup', async (formData) => {
   try {
     // 서버에 폼 데이터 전송하기
-    const response = await axios.post('/api/signup', formData);
+    const response = await axios({
+      method: 'post',
+      url: '/api/signup',
+      data: formData
+    });
     // 서버 응답 처리하기
     return response.data;
   } catch (error) {
