@@ -18,15 +18,17 @@ const IconDiv = styled.div`
 `;
 
 const IconImg = styled.div`
+    position: relative;
     border-radius: 8px;
     width: 52px;
     height: 52px;
     background-color: red;
     transition: all 0.2s ease-in-out;
-    
 `;
 
 const IconText = styled.div`
+    position: absolute;
+    bottom: 0;
     border-radius: 0px 0px 8px 8px;
     transition: all 0.2s ease-in-out;
     visibility: ${(props) => props.visibility};
@@ -54,7 +56,7 @@ const Icon = ({text, onClick}) => {
     return (
         <IconDiv>
             <IconImg onClick={onClick} onMouseOver={() => setIsHovering(true)} onMouseOut={() => setIsHovering(false)}>
-                {isHovering ? <><Image /><IconText>{text}</IconText></> : null}
+                {isHovering ? <IconText>{text}</IconText> : null}
             </IconImg>
         </IconDiv>
     );
