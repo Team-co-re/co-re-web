@@ -9,6 +9,12 @@ const IconDiv = styled.div`
     justify-content: center;
     flex-direction: column;
     align-items: center;
+    :hover>div {
+        cursor: pointer;
+        background-color: purple;
+        width: 48px;
+        height: 48px;
+    };
 `;
 
 const IconImg = styled.div`
@@ -16,12 +22,7 @@ const IconImg = styled.div`
     height: 52px;
     background-color: red;
     transition: all 0.2s ease-in-out;
-    :hover {
-        cursor: pointer;
-        background-color: purple;
-        width: 48px;
-        height: 48px;
-    };
+    
 `;
 
 const IconText = styled.div`
