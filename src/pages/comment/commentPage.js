@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { commentModalFalse } from '../../redux/slices/commentModalSlice';
+import { returnBaseProcess } from '../../redux/slices/headerProcessSlice';
 
 const CommentPageContainer = styled.div`
     width: 600px;
@@ -22,9 +23,14 @@ const CommentPageContainer = styled.div`
 const Comment = () => {
     const dispatch = useDispatch();
 
+    const closeClickHandler = () => {
+        dispatch(commentModalFalse());
+        dispatch(returnBaseProcess());
+    };
+
     return (
         <CommentPageContainer>
-            <button onClick={() => dispatch(commentModalFalse())}>X</button>
+            <button onClick={closeClickHandler}>X</button>
         </CommentPageContainer>
     );
 };

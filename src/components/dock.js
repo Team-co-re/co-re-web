@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Icon from './icon';
 import { useDispatch } from 'react-redux';
 import { commentModalTrue } from '../redux/slices/commentModalSlice';
+import { changeProcess } from '../redux/slices/headerProcessSlice';
 
 const Container = styled.div`
     position: absolute;
@@ -27,6 +28,7 @@ const Menu = () => {
 
     const commentClickHandler = () => {
         dispatch(commentModalTrue());
+        dispatch(changeProcess('주석처리'));
     };
 
     return (

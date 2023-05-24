@@ -41,15 +41,6 @@ const IconText = styled.div`
     line-height: 12px;
 `;
 
-const Image = styled.div`
-    border-radius: 8px 8px 0px 0px;
-    transition: all 0.2s ease-in-out;
-    width: 100%;
-    height: 75%;
-    background-color: green;
-    
-`;
-
 const Icon = ({text, onClick}) => {
     const [isHovering, setIsHovering] = useState(false);
 
