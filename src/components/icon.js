@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import componentImg from '../assets/imgs/dmu.jpeg'
+
 
 const IconDiv = styled.div`
     display: flex;
@@ -11,12 +13,10 @@ const IconDiv = styled.div`
     align-items: center;
     :hover>div {
         cursor: pointer;
-        background-color: purple;
         width: 48px;
         height: 48px;
     };
-    
-    filter: drop-shadow(5px 5px 5px #a4bbff);
+    filter: drop-shadow(5px 5px 5px #495057);
 `;
 
 const IconImg = styled.div`
@@ -25,30 +25,49 @@ const IconImg = styled.div`
     width: 52px;
     height: 52px;
     background-color: red;
+    background: url(${(props) => props.icon});
+    background-size: 100%;
     transition: all 0.2s ease-in-out;
 `;
 
 const IconText = styled.div`
     position: absolute;
-    bottom: 0;
-    border-radius: 0px 0px 8px 8px;
+    padding: 3px;
+    top: -15px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
     transition: all 0.2s ease-in-out;
     visibility: ${(props) => props.visibility};
-    width: 100%;
     height: 25%;
-    background-color: red;
-    color: black;
+    width: max-content;
+    background-color: rgba(255, 255, 255, 0.5);
+    color: #000000;
     text-align: center;
-    font-size: 4px;
+    font-size: 12px;
     line-height: 12px;
+    :after {
+        position: absolute;
+        top:18px;
+        left: 50%;
+        transform: translate(-50%, 0%);
+        border: solid transparent;
+        border-color: rgba(51, 51, 51, 0);
+        border-top-color: rgba(255, 255, 255, 0.5);
+        border-width: 4px;
+        pointer-events: none;
+        content: ' ';
+    }
 `;
 
-const Icon = ({text, onClick}) => {
+const Icon = ({ text, onClick, iconImg }) => {
     const [isHovering, setIsHovering] = useState(false);
-
+    console.log(iconImg);
     return (
         <IconDiv>
-            <IconImg onClick={onClick} onMouseOver={() => setIsHovering(true)} onMouseOut={() => setIsHovering(false)}>
+            <IconImg icon={iconImg} onClick={onClick} onMouseOver={() => setIsHovering(true)} onMouseOut={() => setIsHovering(false)}>
                 {isHovering ? <IconText>{text}</IconText> : null}
             </IconImg>
         </IconDiv>
