@@ -18,6 +18,7 @@ const IconDiv = styled.div`
 `;
 
 const IconImg = styled.div`
+    border-radius: 8px;
     width: 52px;
     height: 52px;
     background-color: red;
@@ -26,6 +27,7 @@ const IconImg = styled.div`
 `;
 
 const IconText = styled.div`
+    border-radius: 0px 0px 8px 8px;
     transition: all 0.2s ease-in-out;
     visibility: ${(props) => props.visibility};
     width: 100%;
@@ -34,9 +36,11 @@ const IconText = styled.div`
     color: black;
     text-align: center;
     font-size: 4px;
+    line-height: 12px;
 `;
 
 const Image = styled.div`
+    border-radius: 8px 8px 0px 0px;
     transition: all 0.2s ease-in-out;
     width: 100%;
     height: 75%;
