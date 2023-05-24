@@ -1,8 +1,16 @@
 import React,{useState} from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from "react-redux";
-import { signup } from '../../redux/slices/signSlice';
-import { setUsername, setPassword, setConfirmPassword, setSkillLevel, setJobRole, setNickname} from '../../redux/slices/signSlice';
+import {
+  setUsername,
+  setPassword,
+  setConfirmPassword,
+  setSkillLevel,
+  setJobRole,
+  setNickname,
+  validateForm,
+  signup,
+} from "../../redux/slices/signSlice";
 
 const FormContainer = styled.div`
   height: 300px;
@@ -241,18 +249,36 @@ const Select = styled.select`
 `;
 const Option = styled.option`
 `;
+const IdErrorMessage = styled.div`
+  color: red;
+  font-size: 5px;
+  width: 210px;
+  position: relative;
+  align-items: center;
+  left: 300px;
+  top: 25px;
+`;
+
+const PwdErrorMessage = styled.div``;
+const ConfirmPwdErrorMessage = styled.div``;
+const LevelSkillErrorMessage = styled.div``;
+const JobErrorMessage = styled.div``;
+const NicknameErrorMessage = styled.div``;
+
+
 
 const Sign = () => {
   const dispatch = useDispatch();
   const {
-    messages,
-    username,
-    password,
-    confirmPassword,
-    isPasswordVisible,
-    skillLevel,
-    jobRole,
-    nickname,
+    sign: {
+      username,
+      password,
+      confirmPassword,
+      skillLevel,
+      jobRole,
+      nickname,
+      errorMessages,
+    },
   } = useSelector((state) => state);
   
 
@@ -282,21 +308,22 @@ const Sign = () => {
     dispatch(setNickname(e.target.value));
   };
 
-  
-
   const handleLoginClick = () => {
-    
   };
 
   const handleSignupClick = () => {
   };
 
   const handleButtonClick = async () => {
-    if (password !== confirmPassword) {
-      console.log("비번다시쳐라")
-      alert('비밀번호를 다시 확인하세요.');
+    console.log(skillLevel)
+    dispatch(validateForm());
+    if (Object.keys(errorMessages).length > 0) {
+      console.log(
+        "양식 유효성 검사에 실패했습니다. 오류 메시지를 확인하십시오."
+      );
       return;
     }
+
     const formData = {
       username,
       password,
@@ -316,61 +343,100 @@ const Sign = () => {
 
   return (
     <>
-    <FormContainer>
-      <ScrollableContent>
-      {!isSignupFormVisible && (
-        <LoginButtonChat>
-          <LoginButton>
-            <button onClick={handleLoginClick}>로그인</button> <br />
-            <button>소셜 로그인</button> <br />
-            <button onClick={handleSignupClick}>회원가입</button> 
-          </LoginButton>
-        </LoginButtonChat>
-      )}
-      <FormId>
-        <Label>사용할 아이디를 입력하세요.</Label>
-        <Input type="text" value={username} onChange={handleUsernameChange} placeholder='아이디를 입력하세요' />
-      </FormId>
-      <FormPwd>
-        <Label>사용할 비밀번호를 입력하세요. </Label>
-        <Input type="password" value={password} onChange={handlePasswordChange} placeholder='비밀번호를 입력하세요'/>
-      </FormPwd>
-      <FormPwd2>
-        <Label>비밀번호를 확인하세요.</Label>
-        <Input type="password" value={confirmPassword} onChange={handleConfirmPasswordChange} placeholder='비밀번호를 확인하세요'/>
-      </FormPwd2>
-      <FormSkill>
-        <Label>개발수준을 선택하세요. </Label>
-        <Select value={skillLevel} onChange={handleSkillLevelChange} placeholder='개발수준을 선택하세요'>
-          <Option value="beginner">Beginner</Option>
-          <Option value="intermediate">Intermediate</Option>
-          <Option value="advanced">Advanced</Option>
-        </Select>
-      </FormSkill>
-      <FormJob>
-        <Label>개발직군을 선택하세요</Label>
-        <Select value={jobRole} onChange={handleJobRoleChange} placeholder='개발직군을 선택하세요'>
-          <Option value="frontend">Frontend</Option>
-          <Option value="backend">Backend</Option>
-          <Option value="android">Android</Option>
-          <Option value="ios">iOS</Option>
-          <Option value="cloud">Cloud</Option>
-          <Option value="iot">IoT</Option>
-          <Option value="ai">Artificial Intelligence</Option>
-          <Option value="other">Other</Option>
-        </Select>
-      </FormJob>
-      <FormNickname>
-        <Label>사용할 닉네임을 작성해주세요.</Label>
-        <Input type="text" value={nickname} onChange={handleNicknameChange} placeholder='닉네임을 입력하세요'/>
-      </FormNickname>
-      </ScrollableContent>
-    </FormContainer>
-        <InputContainer>
-          <Input  placeholder='위 내용을 전부 작성 후 전송을 눌러주세요.'/>
-          <Button onClick={handleButtonClick}> 전송 </Button>
-        </InputContainer>
-  </>
+      <FormContainer>
+        <ScrollableContent>
+          {!isSignupFormVisible && (
+            <LoginButtonChat>
+              <LoginButton>
+                <button onClick={handleLoginClick}>로그인</button> <br />
+                <button>소셜 로그인</button> <br />
+                <button onClick={handleSignupClick}>회원가입</button>
+              </LoginButton>
+            </LoginButtonChat>
+          )}
+          <FormId>
+            <Label>사용할 아이디를 입력하세요.</Label>
+            <Input
+              type="text"
+              value={username}
+              onChange={handleUsernameChange}
+              placeholder="아이디를 입력하세요"
+            />
+            {errorMessages.username && <IdErrorMessage>{errorMessages.username}</IdErrorMessage>}
+          </FormId>
+          <FormPwd>
+            <Label>사용할 비밀번호를 입력하세요. </Label>
+            <Input
+              type="password"
+              value={password}
+              onChange={handlePasswordChange}
+              placeholder="비밀번호를 입력하세요"
+            />
+            {errorMessages.password && <PwdErrorMessage>{errorMessages.password}</PwdErrorMessage>}
+          </FormPwd>
+          <FormPwd2>
+            <Label>비밀번호를 확인하세요.</Label>
+            <Input
+              type="password"
+              value={confirmPassword}
+              onChange={handleConfirmPasswordChange}
+              placeholder="비밀번호를 확인하세요"
+            />
+            {errorMessages.confirmPassword && (<ConfirmPwdErrorMessage>{errorMessages.confirmPassword}</ConfirmPwdErrorMessage>)}
+          </FormPwd2>
+          <FormSkill>
+            <Label>개발수준을 선택하세요. </Label>
+            <Select
+              value={skillLevel}
+              onChange={handleSkillLevelChange}
+              placeholder="개발수준을 선택하세요"
+            >
+              <Option >개발수준 선택</Option>
+              <Option value="beginner">Beginner</Option>
+              <Option value="intermediate">Intermediate</Option>
+              <Option value="advanced">Advanced</Option>
+              {errorMessages.skillLevel && (
+                <LevelSkillErrorMessage>{errorMessages.skillLevel}</LevelSkillErrorMessage>
+              )}
+            </Select>
+          </FormSkill>
+          <FormJob>
+            <Label>개발직군을 선택하세요</Label>
+            <Select
+              defaultValue="frontend"
+              value={jobRole}
+              onChange={handleJobRoleChange}
+              placeholder="개발직군을 선택하세요"
+            >
+              <Option >개발직군 선택</Option>
+              <Option value="frontend">Frontend</Option>
+              <Option value="backend">Backend</Option>
+              <Option value="android">Android</Option>
+              <Option value="ios">iOS</Option>
+              <Option value="cloud">Cloud</Option>
+              <Option value="iot">IoT</Option>
+              <Option value="ai">Artificial Intelligence</Option>
+              <Option value="other">Other</Option>
+              {errorMessages.jobRole && <JobErrorMessage>{errorMessages.jobRole}</JobErrorMessage>}
+            </Select>
+          </FormJob>
+          <FormNickname>
+            <Label>사용할 닉네임을 작성해주세요.</Label>
+            <Input
+              type="text"
+              value={nickname}
+              onChange={handleNicknameChange}
+              placeholder="닉네임을 입력하세요"
+            />
+            {errorMessages.nickname && <NicknameErrorMessage>{errorMessages.nickname}</NicknameErrorMessage>}
+          </FormNickname>
+        </ScrollableContent>
+      </FormContainer>
+      <InputContainer>
+        <Input placeholder="위 내용을 전부 작성 후 전송을 눌러주세요." />
+        <Button onClick={handleButtonClick}> 전송 </Button>
+      </InputContainer>
+    </>
   );
 };
 

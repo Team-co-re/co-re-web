@@ -184,9 +184,9 @@ const PassForm = styled.div`
 
 const Login = () => {
   const dispatch = useDispatch();
-  const { messages, username, password, isPasswordVisible } = useSelector(
-    (state) => state.login
-  );
+  const {
+    username, password, isPasswordVisible ,
+  } = useSelector((state) => state.login);
   
   const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);
   const [isSignupFormVisible, setIsSignupFormVisible] = useState(false);
@@ -253,19 +253,6 @@ const Login = () => {
                   onChange={handleUsernameChange}
                 />
               </IdForm>
-              {isPasswordVisible && (
-                <>
-                  <PasswordForm>비밀번호를 입력하세요</PasswordForm>
-                  <PassForm>
-                    <input
-                      type="password"
-                      placeholder="비밀번호를 입력하세요"
-                      value={password}
-                      onChange={handlePasswordChange}
-                    />
-                  </PassForm>
-                </>
-              )}
             </MessageContainer>
           )}
           {isLoginFormVisible && !isSignupFormVisible && (
@@ -281,7 +268,7 @@ const Login = () => {
               </PassForm>
             </div>
           )}
-       {isSignupFormVisible && (
+        {isSignupFormVisible && (
           <Sign />
         )}
         </div>
