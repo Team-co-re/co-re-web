@@ -15,6 +15,8 @@ const IconDiv = styled.div`
         width: 48px;
         height: 48px;
     };
+    
+    filter: drop-shadow(5px 5px 5px #a4bbff);
 `;
 
 const IconImg = styled.div`
