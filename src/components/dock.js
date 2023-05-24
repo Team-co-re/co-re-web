@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Icon from './icon';
+import { useDispatch } from 'react-redux';
+import { commentModalTrue } from '../redux/slices/commentModalSlice';
 
 const Container = styled.div`
     position: absolute;
@@ -21,10 +23,16 @@ const SubContainer = styled.div`
 `;
 
 const Menu = () => {
+    const dispatch = useDispatch();
+
+    const commentClickHandler = () => {
+        dispatch(commentModalTrue());
+    };
+
     return (
         <Container>
             <SubContainer>
-                <Icon text="기능1"/>
+                <Icon text="주석처리" onClick={commentClickHandler}/>
                 <Icon text="기능2"/>
                 <Icon text="기능3"/>
                 <Icon text="기능4"/>
