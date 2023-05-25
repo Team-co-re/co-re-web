@@ -152,6 +152,13 @@ export const validateForm = () => (dispatch, getState) => {
     jobRole !== '' &&
     nickname.trim() !== ''
   ) {
+     try {
+      dispatch(signup(getState().sign));
+      console.log("회원 가입이 성공적으로 완료되었습니다.");
+      alert("회원 가입이 성공적으로 완료되었습니다. 로그인을 해주세요.");
+    } catch (error) {
+      console.log("회원 가입 중 오류가 발생했습니다.", error);
+    }
     // 회원 가입 처리를 수행하는 비동기 작업을 여기에 구현하자 ..
     // 예를 들어, API 호출이나 데이터베이스 저장 등을 수행할 수 있다 ..!
     // 회원 가입이 성공하면 초기화 또는 리다이렉트 등의 동작을 수행할 수 있다!!

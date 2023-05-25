@@ -5,6 +5,7 @@ import { loginModalFalse } from "../../redux/slices/loginModalSlice";
 import { returnBaseProcess } from "../../redux/slices/headerProcessSlice";
 import { setMessages, setUsername, setPassword, setPasswordVisible, resetLogin } from '../../redux/slices/loginSlice';
 import Sign from "./Sign"
+import SocialLogin from "./SocialLogin";
 
 
 
@@ -191,6 +192,8 @@ const Login = () => {
   const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);
   const [isSignupFormVisible, setIsSignupFormVisible] = useState(false);
   const [isInputVisible, setIsInputVisible] = useState(true);
+  const [isSocialLoginVisible, setIsSocialLoginVisible] = useState(false);
+
   
   const closeOnClickHandler = () => {
     dispatch(loginModalFalse());
@@ -209,12 +212,20 @@ const Login = () => {
   const handleLoginClick = () => {
     setIsLoginFormVisible(true);
     setIsSignupFormVisible(false);
+    setIsSocialLoginVisible(false);
   };
 
   const handleSignupClick = () => {
     setIsSignupFormVisible(true);
     setIsLoginFormVisible(false);
     setIsInputVisible(false);
+    setIsSocialLoginVisible(false);
+  };
+
+  const handleSocialLoginClick = () => {
+    setIsSocialLoginVisible(true);
+    setIsLoginFormVisible(false);
+    setIsSignupFormVisible(false);
   };
 
   const handleButtonClick = () => {
@@ -228,6 +239,7 @@ const Login = () => {
     }
   };
 
+
   return (
     <LoginContainer>
       <CloseBtn onClick={closeOnClickHandler}>X</CloseBtn>
@@ -236,13 +248,15 @@ const Login = () => {
           <LoginButtonChat>
             <LoginButton>
               <button onClick={handleLoginClick}>로그인</button> <br />
-              <button>소셜 로그인</button> <br />
-              <button onClick={handleSignupClick}>회원가입</button> 
+              <button onClick={handleSocialLoginClick}>소셜 로그인</button>
+              <br />
+              {isSocialLoginVisible && <SocialLogin />}
+              <button onClick={handleSignupClick}>회원가입</button>
             </LoginButton>
           </LoginButtonChat>
         )}
         <div style={{ flex: 1 }}>
-          {isLoginFormVisible && !isSignupFormVisible && ( 
+          {isLoginFormVisible && !isSignupFormVisible && (
             <MessageContainer>
               <LoginForm>아이디를 입력하세요</LoginForm>
               <IdForm>
@@ -268,15 +282,13 @@ const Login = () => {
               </PassForm>
             </div>
           )}
-        {isSignupFormVisible && (
-          <Sign />
-        )}
+          {isSignupFormVisible && <Sign />}
         </div>
         {isInputVisible && (
-        <InputContainer>
-          <Input placeholder='위 내용을 전부 작성 후 전송을 눌러주세요.'/>
-          <Button onClick={handleButtonClick}> 전송 </Button>
-        </InputContainer>
+          <InputContainer>
+            <Input placeholder="위 내용을 전부 작성 후 전송을 눌러주세요." />
+            <Button onClick={handleButtonClick}> 전송 </Button>
+          </InputContainer>
         )}
       </ChatContainer>
     </LoginContainer>

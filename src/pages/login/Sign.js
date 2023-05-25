@@ -240,6 +240,7 @@ const Button = styled.button`
   padding: 8px;
   background-color: #fff065;
   color: #000000;
+  cursor: pointer;
 `;
 
 const Label = styled.label`
@@ -259,13 +260,6 @@ const IdErrorMessage = styled.div`
   top: 25px;
 `;
 
-const PwdErrorMessage = styled.div``;
-const ConfirmPwdErrorMessage = styled.div``;
-const LevelSkillErrorMessage = styled.div``;
-const JobErrorMessage = styled.div``;
-const NicknameErrorMessage = styled.div``;
-
-
 
 const Sign = () => {
   const dispatch = useDispatch();
@@ -280,7 +274,8 @@ const Sign = () => {
       errorMessages,
     },
   } = useSelector((state) => state);
-  
+
+  // 각 폼에 대한 에러 메시지를 개별적으로 추출
 
   const [isSignupFormVisible] = useState(false);
 
@@ -308,38 +303,19 @@ const Sign = () => {
     dispatch(setNickname(e.target.value));
   };
 
-  const handleLoginClick = () => {
-  };
+  const handleLoginClick = () => {};
 
-  const handleSignupClick = () => {
-  };
+  const handleSignupClick = () => {};
 
   const handleButtonClick = async () => {
-    console.log(skillLevel)
+    console.log(skillLevel);
     dispatch(validateForm());
-    if (Object.keys(errorMessages).length > 0) {
-      console.log(
-        "양식 유효성 검사에 실패했습니다. 오류 메시지를 확인하십시오."
-      );
-      return;
-    }
-
-    const formData = {
-      username,
-      password,
-      skillLevel,
-      jobRole,
-      nickname,
-    };
-    try {
-      await dispatch(signup(formData));
-      console.log('회원 가입이 성공적으로 완료되었습니다.');
-      alert('회원 가입이 성공적으로 완료되었습니다.')
-    } catch (error) {
-      console.log('회원 가입 중 오류가 발생했습니다.', error);
-    }
+    const errorFields = Object.keys(errorMessages);
+    if (errorFields.length > 0) {
+    const errorMessage = errorFields.map(field => errorMessages[field]).join('\n');
+    alert(errorMessage);
+  }
   };
-      
 
   return (
     <>
@@ -362,7 +338,6 @@ const Sign = () => {
               onChange={handleUsernameChange}
               placeholder="아이디를 입력하세요"
             />
-            {errorMessages.username && <IdErrorMessage>{errorMessages.username}</IdErrorMessage>}
           </FormId>
           <FormPwd>
             <Label>사용할 비밀번호를 입력하세요. </Label>
@@ -372,7 +347,6 @@ const Sign = () => {
               onChange={handlePasswordChange}
               placeholder="비밀번호를 입력하세요"
             />
-            {errorMessages.password && <PwdErrorMessage>{errorMessages.password}</PwdErrorMessage>}
           </FormPwd>
           <FormPwd2>
             <Label>비밀번호를 확인하세요.</Label>
@@ -382,7 +356,6 @@ const Sign = () => {
               onChange={handleConfirmPasswordChange}
               placeholder="비밀번호를 확인하세요"
             />
-            {errorMessages.confirmPassword && (<ConfirmPwdErrorMessage>{errorMessages.confirmPassword}</ConfirmPwdErrorMessage>)}
           </FormPwd2>
           <FormSkill>
             <Label>개발수준을 선택하세요. </Label>
@@ -391,13 +364,10 @@ const Sign = () => {
               onChange={handleSkillLevelChange}
               placeholder="개발수준을 선택하세요"
             >
-              <Option >개발수준 선택</Option>
+              <Option>개발수준 선택</Option>
               <Option value="beginner">Beginner</Option>
               <Option value="intermediate">Intermediate</Option>
               <Option value="advanced">Advanced</Option>
-              {errorMessages.skillLevel && (
-                <LevelSkillErrorMessage>{errorMessages.skillLevel}</LevelSkillErrorMessage>
-              )}
             </Select>
           </FormSkill>
           <FormJob>
@@ -408,7 +378,7 @@ const Sign = () => {
               onChange={handleJobRoleChange}
               placeholder="개발직군을 선택하세요"
             >
-              <Option >개발직군 선택</Option>
+              <Option>개발직군 선택</Option>
               <Option value="frontend">Frontend</Option>
               <Option value="backend">Backend</Option>
               <Option value="android">Android</Option>
@@ -417,7 +387,6 @@ const Sign = () => {
               <Option value="iot">IoT</Option>
               <Option value="ai">Artificial Intelligence</Option>
               <Option value="other">Other</Option>
-              {errorMessages.jobRole && <JobErrorMessage>{errorMessages.jobRole}</JobErrorMessage>}
             </Select>
           </FormJob>
           <FormNickname>
@@ -428,7 +397,6 @@ const Sign = () => {
               onChange={handleNicknameChange}
               placeholder="닉네임을 입력하세요"
             />
-            {errorMessages.nickname && <NicknameErrorMessage>{errorMessages.nickname}</NicknameErrorMessage>}
           </FormNickname>
         </ScrollableContent>
       </FormContainer>
