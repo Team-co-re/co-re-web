@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { loginModalTrue } from '../redux/slices/loginModalSlice';
-import { changeProcess } from '../redux/slices/headerProcessSlice';
+import { loginModalFalse, loginModalTrue } from '../redux/slices/loginModalSlice';
+import { changeProcess, returnBaseProcess } from '../redux/slices/headerProcessSlice';
+import homelogo from '../assets/imgs/chatgptlogo.png';
+import { commentModalFalse } from '../redux/slices/commentModalSlice';
 
 const Container = styled.div`
     background-color: #D9D9D9;
@@ -40,6 +42,16 @@ const A = styled.a`
     cursor: pointer;
 `;
 
+const Logo = styled.div`
+    background-image: url(${(props) => props.logoImg});
+    background-size: 100%;
+    width: 20px;
+    height: 20px;
+    :hover {
+        cursor: pointer;
+    };
+`;
+
 const Header = () => {
     const process = useSelector((state) => state.process.processText);
 
@@ -52,6 +64,12 @@ const Header = () => {
     const loginClickHandler = (e) => {
         dispatch(loginModalTrue());
         dispatch(changeProcess(e.target.innerText));
+    };
+
+    const logoClickHandler = () => {
+        dispatch(loginModalFalse());
+        dispatch(commentModalFalse());
+        dispatch(returnBaseProcess());
     };
 
     const nowDate = () => {
@@ -75,7 +93,7 @@ const Header = () => {
         <Container>
             <SubContainer>
                 <LeftContent>
-                    <TextBox>로고</TextBox>
+                    <TextBox><Logo onClick={logoClickHandler} logoImg={homelogo} /></TextBox>
                     <TextBox>{process}</TextBox>
                     <TextBox><A onClick={loginClickHandler}>로그인</A></TextBox>
                     <TextBox>도움말</TextBox>

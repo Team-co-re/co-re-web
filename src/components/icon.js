@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import componentImg from '../assets/imgs/dmu.jpeg'
 
 
 const IconDiv = styled.div`
