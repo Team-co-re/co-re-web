@@ -88,81 +88,114 @@ export const {
 
 
 // 유효성 검사 액션 크리에이터
-export const validateForm = () => (dispatch, getState) => {
-  const {
-    username,
-    password,
-    confirmPassword,
-    skillLevel,
-    jobRole,
-    nickname,
-  } = getState().sign;
+export const validateForm = createAsyncThunk(
+  "sign/validateForm",
+  async (_, { dispatch, getState }) => {
+    // 오류 메시지 초기화
+    dispatch(setErrorMessages({}));
 
-  // 오류 메시지를 초기화
-  dispatch(setErrorMessages({}));
+    const {
+      username,
+      password,
+      confirmPassword,
+      skillLevel,
+      jobRole,
+      nickname,
+    } = getState().sign;
 
-  // 오류가 발생하면 해당 필드의 오류 메시지를 설정
-  if (username.trim() === '') {
-    dispatch(setErrorMessages({ username: '**아이디를 입력하세요.**' }));
-  } else if (username.length < 4 || username.length > 20) {
-    dispatch(
-      setErrorMessages({
-        username: '**아이디는 4자 이상 20자 이하로 입력해야 합니다.**',
-      })
-    );
-  }
-
-  if (password.trim() === '') {
-    dispatch(setErrorMessages({ password: '**비밀번호를 입력하세요.**' }));
-  } else if (password.length < 8) {
-    dispatch(
-      setErrorMessages({ password: '**비밀번호는 8자 이상이어야 합니다.**' })
-    );
-  }
-
-  if (confirmPassword.trim() === '') {
-    dispatch(
-      setErrorMessages({ confirmPassword: '**비밀번호를 확인하세요.**' })
-    );
-  } else if (confirmPassword !== password) {
-    dispatch(
-      setErrorMessages({ confirmPassword: '**비밀번호를 다시 입력해주세요.**' })
-    );
-  }
-
-  if (skillLevel === '') {
-    dispatch(setErrorMessages({ skillLevel: '**개발 수준을 선택하세요.**' }));
-  }
-
-  if (jobRole === '') {
-    dispatch(setErrorMessages({ jobRole: '**개발 직군을 선택하세요.**' }));
-  }
-
-  if (nickname.trim() === '') {
-    dispatch(setErrorMessages({ nickname: '**닉네임을 입력하세요.**' }));
-  }
-
-  // 모든 필드에 유효성 검사를 통과한 경우 회원 가입 처리
-  if (
-    username.trim() !== '' &&
-    password.trim() !== '' &&
-    confirmPassword.trim() !== '' &&
-    password === confirmPassword &&
-    skillLevel !== '' &&
-    jobRole !== '' &&
-    nickname.trim() !== ''
-  ) {
-     try {
-      dispatch(signup(getState().sign));
-      console.log("회원 가입이 성공적으로 완료되었습니다.");
-      alert("회원 가입이 성공적으로 완료되었습니다. 로그인을 해주세요.");
-    } catch (error) {
-      console.log("회원 가입 중 오류가 발생했습니다.", error);
+    if (username.trim() === "") {
+      dispatch(
+        setErrorMessages({
+          username: "**아이디를 입력하세요.**",
+        })
+      );
+      return;
+    } else if (username.length < 4 || username.length > 20) {
+      dispatch(
+        setErrorMessages({
+          username: "**아이디는 4자 이상 20자 이하로 입력해야 합니다.**",
+        })
+      );
+      return;
     }
-    // 회원 가입 처리를 수행하는 비동기 작업을 여기에 구현하자 ..
-    // 예를 들어, API 호출이나 데이터베이스 저장 등을 수행할 수 있다 ..!
-    // 회원 가입이 성공하면 초기화 또는 리다이렉트 등의 동작을 수행할 수 있다!!
-  }
-};
 
+    if (password.trim() === "") {
+      dispatch(
+        setErrorMessages({
+          password: "**비밀번호를 입력하세요.**",
+        })
+      );
+      return;
+    } else if (password.length < 8) {
+      dispatch(
+        setErrorMessages({
+          password: "**비밀번호는 8자 이상이어야 합니다.**",
+        })
+      );
+      return;
+    }
+
+    if (confirmPassword.trim() === "") {
+      dispatch(
+        setErrorMessages({
+          confirmPassword: "**비밀번호를 확인하세요.**",
+        })
+      );
+      return;
+    } else if (confirmPassword !== password) {
+      dispatch(
+        setErrorMessages({
+          confirmPassword: "**비밀번호를 다시 입력해주세요.**",
+        })
+      );
+      return;
+    }
+
+    if (skillLevel === "") {
+      dispatch(
+        setErrorMessages({
+          skillLevel: "**개발 수준을 선택하세요.**",
+        })
+      );
+      return;
+    }
+
+    if (jobRole === "") {
+      dispatch(
+        setErrorMessages({
+          jobRole: "**개발 직군을 선택하세요.**",
+        })
+      );
+      return;
+    }
+
+    if (nickname.trim() === "") {
+      dispatch(
+        setErrorMessages({
+          nickname: "**닉네임을 입력하세요.**",
+        })
+      );
+      return;
+    }
+
+    // 모든 필드에 유효성 검사를 통과한 경우 회원 가입 처리
+    if (
+      username.trim() !== "" &&
+      password.trim() !== "" &&
+      confirmPassword.trim() !== "" &&
+      password === confirmPassword &&
+      skillLevel !== "" &&
+      jobRole !== "" &&
+      nickname.trim() !== ""
+    ) {
+      try {
+        await dispatch(signup(getState().sign));
+        console.log("회원 가입이 성성공적으로 완료되었습니다.");
+        alert("회원 가입이 성공적으로 완료되었습니다. 로그인을 해주세요.");
+      } catch (error) {
+        console.log("회원 가입 중 오류가 발생했습니다.", error);
+      }
+    }
+  }
+);
 export default sign.reducer;

@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import styled from 'styled-components';
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   setUsername,
   setPassword,
@@ -11,6 +11,7 @@ import {
   validateForm,
   signup,
 } from "../../redux/slices/signSlice";
+import LoginContainer from "./loginPage";
 
 const FormContainer = styled.div`
   height: 300px;
@@ -278,6 +279,7 @@ const Sign = () => {
   // 각 폼에 대한 에러 메시지를 개별적으로 추출
 
   const [isSignupFormVisible] = useState(false);
+  const [isSignupComplete, setIsSignupComplete] = useState(false);
 
   const handleUsernameChange = (e) => {
     dispatch(setUsername(e.target.value));
@@ -307,15 +309,19 @@ const Sign = () => {
 
   const handleSignupClick = () => {};
 
-  const handleButtonClick = async () => {
-    console.log(skillLevel);
-    dispatch(validateForm());
-    const errorFields = Object.keys(errorMessages);
-    if (errorFields.length > 0) {
-    const errorMessage = errorFields.map(field => errorMessages[field]).join('\n');
+const handleButtonClick = async () => {
+  await dispatch(validateForm());
+
+  const errorFields = Object.keys(errorMessages);
+  if (errorFields.length > 0) {
+    const errorMessage = errorFields
+      .map((field) => errorMessages[field])
+      .join("\n");
     alert(errorMessage);
+  } else {
+    setIsSignupComplete(true);
   }
-  };
+};
 
   return (
     <>
@@ -403,6 +409,7 @@ const Sign = () => {
       <InputContainer>
         <Input placeholder="위 내용을 전부 작성 후 전송을 눌러주세요." />
         <Button onClick={handleButtonClick}> 전송 </Button>
+        {!isSignupFormVisible && isSignupComplete && <LoginContainer />}
       </InputContainer>
     </>
   );
