@@ -63,7 +63,6 @@ const IconText = styled.div`
 
 const Icon = ({ text, onClick, iconImg }) => {
     const [isHovering, setIsHovering] = useState(false);
-    console.log(iconImg);
     return (
         <IconDiv>
             <IconImg icon={iconImg} onClick={onClick} onMouseOver={() => setIsHovering(true)} onMouseOut={() => setIsHovering(false)}>

@@ -1,13 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit"
 
-const initialState = {
-    loginModalState: false,
-    
-};
-
 export const loginModalSlice = createSlice({
     name: 'loginModal',
-    initialState,
+    initialState: {
+        loginModalState: false,
+    },
     reducers: {
         loginModalTrue: (state) => {
             state.loginModalState = true
