@@ -5,6 +5,7 @@ import { commentModalFalse } from '../../redux/slices/commentModalSlice';
 import { returnBaseProcess } from '../../redux/slices/headerProcessSlice';
 import sendImg from '../../assets/imgs/send.png';
 import { setCommentText, setSendMessages } from '../../redux/slices/commentSlice';
+import TextBox from '../../components/textbox';
 
 const CommentPageContainer = styled.div`
     width: 800px;
@@ -76,6 +77,7 @@ const SendImgDiv = styled.div`
 `;
 
 const ChatContainer = styled.div`
+    position: relative;
     overflow: scroll;
     width: 100%;
     height: 500px;
@@ -85,6 +87,14 @@ const ChatContainer = styled.div`
 const Send = styled.div`
     background-color: ${(props) => props.isSend ? 'yellow' : 'green'};
 `;
+
+// const TextBox = styled.textarea`
+//     resize: none;
+//     height: auto;
+//     border: none;
+//     outline: none;
+//     border-radius: 8px;
+// `;
 
 const Comment = () => {
     const dispatch = useDispatch();
@@ -99,8 +109,8 @@ const Comment = () => {
 
     const pressEnterHandler = (e) => {
         if (e.key === 'Enter') {
-            if(!e.shiftKey) {
-                e.preventDefault();                
+            if (!e.shiftKey) {
+                e.preventDefault();
                 dispatch(setSendMessages({
                     text: e.target.value,
                     date: String(new Date()),
@@ -114,19 +124,24 @@ const Comment = () => {
                     }));
                     dispatch(setCommentText(''));
                 }, 2000);
-                
+
             };
         };
     };
 
-    console.log(sendTextList);
+    // console.log(sendTextList);
 
     return (
         <CommentPageContainer>
             <SubContainer>
                 <CloseBtn onClick={closeClickHandler}>X</CloseBtn>
                 <ChatContainer>
-                    {sendTextList.map(({text, date, isSend}, idx) => <Send isSend={isSend} key={text+date+idx}><textarea readOnly value={`${text} \n\ndate: ${date}`} /></Send>)}
+                    {sendTextList.map(({ text, date, isSend }, idx) =>
+                        <Send isSend={isSend} key={text + date + idx}>
+                            {/* <TextBox rows="1" readOnly value={`${text}`} /> */}
+                            <TextBox text={text} isSend={isSend} />
+                            {date}
+                        </Send>)}
                 </ChatContainer>
                 <ChatDiv>
                     <ChatSubDiv>
