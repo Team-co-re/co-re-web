@@ -81,20 +81,17 @@ const ChatContainer = styled.div`
     overflow: scroll;
     width: 100%;
     height: 500px;
-    
 `;
 
 const Send = styled.div`
-    background-color: ${(props) => props.isSend ? 'yellow' : 'green'};
+    padding: 4px;
 `;
 
-// const TextBox = styled.textarea`
-//     resize: none;
-//     height: auto;
-//     border: none;
-//     outline: none;
-//     border-radius: 8px;
-// `;
+const DateContainer = styled.div`
+    font-size: 8px;
+    color: '#D3D3D3';
+    text-align: ${(props) => props.sendState ? 'right' : 'left'};
+`;
 
 const Comment = () => {
     const dispatch = useDispatch();
@@ -113,13 +110,13 @@ const Comment = () => {
                 e.preventDefault();
                 dispatch(setSendMessages({
                     text: e.target.value,
-                    date: String(new Date()),
+                    date: new Date().toLocaleString(),
                     isSend: true
                 }));
                 setTimeout(() => {
                     dispatch(setSendMessages({
                         text: resTextList,
-                        date: String(new Date()),
+                        date: new Date().toLocaleString(),
                         isSend: false
                     }));
                     dispatch(setCommentText(''));
@@ -128,8 +125,6 @@ const Comment = () => {
             };
         };
     };
-
-    // console.log(sendTextList);
 
     return (
         <CommentPageContainer>
@@ -140,7 +135,9 @@ const Comment = () => {
                         <Send isSend={isSend} key={text + date + idx}>
                             {/* <TextBox rows="1" readOnly value={`${text}`} /> */}
                             <TextBox text={text} isSend={isSend} />
-                            {date}
+                            <DateContainer sendState={isSend}>
+                                {date}
+                            </DateContainer>
                         </Send>)}
                 </ChatContainer>
                 <ChatDiv>

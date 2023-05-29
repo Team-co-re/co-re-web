@@ -7,13 +7,14 @@ const TextBoxContainer = styled.div`
     background-color: white;
     border-radius: 8px;
     padding: 4px;
-    right: 0px;
-    margin-left: ${(props) => props.marginLeft ? null : 'auto'};
+    background-color: ${(props) => props.sendState ? '	#fef01b' : '#ffffff' };
+    margin-left: ${(props) => props.marginLeft ? 'auto' : null};
+
 `;
 
 const TextBox = ({ text, isSend }) => {
     return (
-        <TextBoxContainer marginLeft={isSend}>
+        <TextBoxContainer sendState={isSend} marginLeft={isSend}>
             {text}
         </TextBoxContainer>
     );
