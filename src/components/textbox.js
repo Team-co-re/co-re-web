@@ -2,13 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 
 const TextBoxContainer = styled.div`
-    width: 400px;
+    width: max-content;
     white-space: pre-line;
     background-color: white;
     border-radius: 8px;
     padding: 4px;
     background-color: ${(props) => props.sendState ? '	#fef01b' : '#ffffff' };
     margin-left: ${(props) => props.marginLeft ? 'auto' : null};
+    text-align: ${(props) => props.marginLeft ? 'right' : 'left'};
 
 `;
 

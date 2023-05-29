@@ -56,24 +56,18 @@ const ChatInput = styled.textarea`
     resize: none;
 `;
 
-const SendBtn = styled.div`
+const SendBtn = styled.input`
     display: flex;
     align-items: center;
     justify-content: center;
+    border: none;
+    background-image: url(${sendImg});
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 85%;
     width: 32px;
     height: 32px;
-    background-color: red;
-    :hover {
-        cursor: pointer;
-        background-color: blue;
-    };
-`;
-
-const SendImgDiv = styled.div`
-    background-image: url(${sendImg});
-    background-size: 100%;
-    width: 28px;
-    height: 28px;
+    background-color: ${(props) => props.bgColor === "" ? '#D3D3D3' : '#fef01b'};
 `;
 
 const ChatContainer = styled.div`
@@ -126,6 +120,22 @@ const Comment = () => {
         };
     };
 
+    const sendOnClickHandler = () => {
+        dispatch(setSendMessages({
+            text: commentText,
+            date: new Date().toLocaleString(),
+            isSend: true
+        }));
+        setTimeout(() => {
+            dispatch(setSendMessages({
+                text: resTextList,
+                date: new Date().toLocaleString(),
+                isSend: false
+            }));
+            dispatch(setCommentText(''));
+        }, 2000);
+    };
+
     return (
         <CommentPageContainer>
             <SubContainer>
@@ -143,9 +153,8 @@ const Comment = () => {
                 <ChatDiv>
                     <ChatSubDiv>
                         <ChatInput value={commentText} onChange={(e) => dispatch(setCommentText(e.target.value))} onKeyDown={pressEnterHandler} />
-                        <SendBtn>
-                            <SendImgDiv />
-                        </SendBtn>
+                        <SendBtn onClick={sendOnClickHandler} type="button" bgColor={commentText} disabled={commentText === "" ? 'disabled' : null} />
+                        
                     </ChatSubDiv>
                 </ChatDiv>
             </SubContainer>
