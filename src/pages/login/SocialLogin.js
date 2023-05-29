@@ -121,6 +121,59 @@ const SocialLogin = () => {
       }
     }, []);
 
+
+    const clientId = '683203379032-qusej5qauh5tnhrsd2d5tbcjup8noasi.apps.googleusercontent.com'; 
+    const redirectUri = 'http://localhost:3000/callback'; 
+    const scope = 'email profile'; // 필요한 권한(scope)을 설정
+    const googleUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}`;
+
+    const handleGoogleLoginClick = () => {
+      window.location.href = googleUrl;
+    };
+
+    useEffect(() => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const authorizationCode = urlParams.get('code');
+      if (authorizationCode) {
+        // const clientId = 'YOUR_CLIENT_ID';
+        // const redirectUri = 'http://localhost:3000/callback'; 
+    
+        axios
+          .post('https://oauth2.googleapis.com/token', {
+            code: authorizationCode,
+            client_id: clientId,
+            redirect_uri: redirectUri,
+            grant_type: 'authorization_code',
+          })
+          .then((response) => {
+            const accessToken = response.data.access_token;
+            // 액세스 토큰을 사용하여 사용자 정보를 가져오는 코드
+            axios
+              .get('https://www.googleapis.com/oauth2/v2/userinfo', {
+                headers: {
+                  Authorization: `Bearer ${accessToken}`,
+                },
+              })
+              .then((response) => {
+                const { id, name, email, picture } = response.data;
+                console.log('User ID:', id);
+                console.log('User Name:', name);
+                console.log('User Email:', email);
+                console.log('User Picture:', picture);
+    
+                // 메인 페이지로 리다이렉션
+                window.location.href = 'http://localhost:3000';
+              })
+              .catch((error) => {
+                console.error('Failed to fetch user data:', error);
+              });
+          })
+          .catch((error) => {
+            console.error('Failed to retrieve access token:', error);
+          });
+      }
+    }, []);
+
     return (
       <SocialForm>
         <SocialButton
@@ -133,7 +186,7 @@ const SocialLogin = () => {
         ></SocialButton>
         <SocialButton
           style={{ backgroundImage: `url(${GoogleLogo})` }}
-          onClick={() => {}}
+          onClick={handleGoogleLoginClick}
         ></SocialButton>
       </SocialForm>
     );
