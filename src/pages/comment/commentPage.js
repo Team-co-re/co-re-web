@@ -6,6 +6,8 @@ import { returnBaseProcess } from '../../redux/slices/headerProcessSlice';
 import sendImg from '../../assets/imgs/send.png';
 import { setCommentText, setSendMessages } from '../../redux/slices/commentSlice';
 import TextBox from '../../components/textbox';
+import axios from 'axios';
+import { API } from '../../config';
 
 const CommentPageContainer = styled.div`
     width: 800px;
@@ -112,7 +114,7 @@ const Comment = () => {
     };
 
     const pressEnterHandler = (e) => {
-        if (e.key === 'Enter') {
+        if (e.key === 'Enter' && e.nativeEvent.isComposing === false) {
             if (!e.shiftKey) {
                 e.preventDefault();
                 dispatch(setSendMessages({
@@ -120,14 +122,23 @@ const Comment = () => {
                     date: new Date().toLocaleString(),
                     isSend: true
                 }));
-                setTimeout(() => {
-                    dispatch(setSendMessages({
-                        text: resTextList,
-                        date: new Date().toLocaleString(),
-                        isSend: false
-                    }));
-                    dispatch(setCommentText(''));
-                }, 2000);
+                // 응답 메시지 세팅
+                axios.post(`${API.GPT_QUESTION}`, {
+                    question: commentText
+                }).then((res) => dispatch(setSendMessages({
+                    text: res.data,
+                    date: new Date().toLocaleString(),
+                    isSend: false
+                })));
+                dispatch(setCommentText(''));
+                // setTimeout(() => {
+                //     dispatch(setSendMessages({
+                //         text: resTextList,
+                //         date: new Date().toLocaleString(),
+                //         isSend: false
+                //     }));
+                //     dispatch(setCommentText(''));
+                // }, 2000);
 
             };
         };
