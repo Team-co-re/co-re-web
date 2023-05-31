@@ -15,7 +15,7 @@ const IconDiv = styled.div`
         width: 48px;
         height: 48px;
     };
-    filter: drop-shadow(5px 5px 5px #495057);
+    filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.2));
 `;
 
 const IconImg = styled.div`
