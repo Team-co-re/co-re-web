@@ -62,7 +62,7 @@ const SocialLogin = () => {
     
     const handleGighubLoginClick = () => {
       const clientId = '9983a0557e40f71ba784';
-      const redirectUri = 'http://localhost:3000/callback';
+      const redirectUri = 'http://localhost:3000';
       const scope = 'repo:status read:repo_hook user:email';
       const githubUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&scope=${scope}&redirect_uri=${redirectUri}`;
       window.location.href = githubUrl;
@@ -123,7 +123,7 @@ const SocialLogin = () => {
 
 
     const clientId = '683203379032-qusej5qauh5tnhrsd2d5tbcjup8noasi.apps.googleusercontent.com'; 
-    const redirectUri = 'http://localhost:3000/callback'; 
+    const redirectUri = 'http://localhost:3000'; 
     const scope = 'email profile'; // 필요한 권한(scope)을 설정
     const googleUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}`;
 

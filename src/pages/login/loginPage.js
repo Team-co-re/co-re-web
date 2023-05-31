@@ -237,6 +237,7 @@ const Login = () => {
       dispatch(setPassword(''));
       dispatch(setPasswordVisible(false));
     }
+    closeOnClickHandler(true)
   };
 
 

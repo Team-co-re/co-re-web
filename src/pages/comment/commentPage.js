@@ -77,6 +77,19 @@ const ChatContainer = styled.div`
     overflow: scroll;
     width: 100%;
     height: 500px;
+    //여기 밑에 부분은 스크롤 투명하게 함 ( 영상찍을려면 이게 더 이쁜것 같아서 !! )
+    overflow-y: scroll;
+    align-items: right;
+    overflow: auto;
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(0, 0, 0, 0.4);
+    }
 `;
 
 const Send = styled.div`
